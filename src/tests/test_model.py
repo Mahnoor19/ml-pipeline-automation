@@ -1,5 +1,5 @@
-from train import train_model  # new
-from preprocess import load_data, preprocess_data  # new
+from train import train_model  
+from preprocess import load_data, preprocess_data  
 
 def test_model_accuracy():
     accuracy = train_model()
