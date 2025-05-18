@@ -1,4 +1,5 @@
-from src.preprocess import load_data, preprocess_data
+from train import train_model  
+from preprocess import load_data, preprocess_data  
 
 def test_load_data():
     data = load_data()
