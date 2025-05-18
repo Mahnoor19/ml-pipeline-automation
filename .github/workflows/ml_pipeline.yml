@@ -5,28 +5,40 @@ on: [push, pull_request]
 jobs:
   test-and-train:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./src
+        
     steps:
-      - uses: actions/checkout@v4
-      
-      - uses: actions/setup-python@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
         with:
           python-version: '3.9'
-          
+
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
-          mkdir -p src/models
-          
-      - name: Run tests
-        run: pytest -v
-          
+          pip install pytest
+
+      - name: Create models directory
+        run: mkdir -p src/models
+
+      - name: Run tests with proper imports
+        run: |
+          cd src
+          PYTHONPATH=$PYTHONPATH:. pytest tests/ -v
+
       - name: Train model
         run: |
           cd src
           python train.py
-          
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload model artifacts
+        uses: actions/upload-artifact@v4
         with:
           name: iris-model
-          path: src/models/
-          retention-days: 5
+          path: src/models/*
+          retention-days: 7
