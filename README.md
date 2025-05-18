@@ -25,3 +25,11 @@ An automated ML pipeline that:
 1. Clone the repo:
    ```bash
    git clone https://github.com/Mahnoor19/ml-pipeline.git
+   
+ Download artifacts from GitHub Actions
+
+Load the model:
+
+python
+import joblib
+model = joblib.load('iris_model.joblib')
